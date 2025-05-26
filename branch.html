@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Branch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f7ff;
+      margin: 0;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #003366;
+      color: white;
+      height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 12px 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #004080;
+      padding-left: 20px;
+    }
+
+    .content {
+  flex: 1;
+  padding: 100px 20px 20px 20px; /* Top padding for space below profile box */
+}
+
+    }
+
+    .header {
+      background-color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .branch-table {
+      width: 100%;
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #003366;
+      color: white;
+    }
+
+    .btn {
+      background-color: #003366;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .btn:hover {
+      background-color: #004080;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center;
+      }
+
+      .sidebar a {
+        display: inline-block;
+        padding: 10px;
+        margin: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- ✅ Profile Box (Only once, top right corner) -->
+  <div style="position: fixed; top: 20px; right: 20px; background-color: #004a99; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; z-index: 1000;">
+    <label for="profileUpload" style="cursor: pointer; margin-right: 10px;">
+      <img id="profilePic" src="photo.jpg" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+    </label>
+    <input type="file" id="profileUpload" accept="image/*" style="display: none;">
+    <span style="color: white; font-size: 16px; font-weight: bold; margin-right: 15px;">Welcome, Admin</span>
+    <button style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 14px; cursor: pointer;">
+      Remove
+    </button>
+  </div>
+
+  <div class="sidebar">
+    <h2>College Admin</h2>
+    <a href="demo.html">Dashboard</a>
+    <a href="branch.html">Manage Branch</a>
+    <a href="teachers.html">Manage Teachers</a>
+    <a href="view.html">View Attendance</a>
+    <a href="notificationadmin.html">Notification</a>
+    <a href="password change.html">Change Password</a>
+    <a href="logout.html">Logout</a>
+  </div>
+
+  <div class="content">
+    <!-- Add Branch Form -->
+    <div id="branchForm" style="display: none; background: white; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+      <h3>Add New Branch</h3>
+      <form id="addBranchForm" onsubmit="return addBranch()">
+        <label for="branchName">Branch Name:</label><br />
+        <input type="text" id="branchName" name="branchName" required style="width: 100%; padding: 10px; margin-bottom: 10px;" /><br />
+
+        <label for="numTeachers">Number of Teachers:</label><br />
+        <input type="number" id="numTeachers" name="numTeachers" min="1" required style="width: 100%; padding: 10px; margin-bottom: 10px;" /><br />
+
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn" onclick="hideForm()">Cancel</button>
+      </form>
+    </div>
+
+    <div class="header">
+      <h2>Manage Branch</h2>
+      <button class="btn" onclick="showForm()">Add Branch</button>
+    </div>
+
+    <div class="branch-table">
+      <h3>Branch Details</h3>
+      <table id="branchTable">
+        <tr>
+          <th>Branch Name</th>
+          <th>Number of Teachers</th>
+          <th>Actions</th>
+        </tr>
+        <tr>
+          <td>BCA Department</td>
+          <td>30</td>
+          <td>
+            <button class="btn" onclick="deleteBranch(this)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>BTECH Department</td>
+          <td>20</td>
+          <td>
+            <button class="btn" onclick="deleteBranch(this)">Delete</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function showForm() {
+      document.getElementById('branchForm').style.display = 'block';
+    }
+
+    function hideForm() {
+      document.getElementById('branchForm').style.display = 'none';
+    }
+
+    function addBranch() {
+      const branchName = document.getElementById("branchName").value.trim();
+      const numTeachers = document.getElementById("numTeachers").value.trim();
+
+      if (branchName === "") {
+        alert("Branch name cannot be empty.");
+        return false;
+      }
+
+      if (isNaN(numTeachers) || numTeachers <= 0) {
+        alert("Number of teachers must be a positive number.");
+        return false;
+      }
+
+      const table = document.getElementById("branchTable");
+      const newRow = table.insertRow(-1);
+
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      const cell3 = newRow.insertCell(2);
+
+      cell1.innerText = branchName;
+      cell2.innerText = numTeachers;
+      cell3.innerHTML = `<button class="btn" onclick="deleteBranch(this)">Delete</button>`;
+
+      alert("Branch added successfully!");
+      document.getElementById("addBranchForm").reset();
+      hideForm();
+
+      return false; // prevent actual form submission
+    }
+
+    function deleteBranch(button) {
+      if (confirm("Are you sure you want to delete this branch?")) {
+        const row = button.closest("tr");
+        row.remove();
+        alert("Branch deleted successfully!");
+      }
+    }
+  // ✅ Profile picture preview
+    document.getElementById("profileUpload").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("profilePic").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+  </script>
+</body>
+</html>

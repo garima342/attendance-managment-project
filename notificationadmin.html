@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Notifications</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: #0a3161;
+            color: white;
+            padding: 40px 25px;
+            position: fixed;
+            height: 100vh;
+            box-shadow: 2px 0px 5px rgba(0,0,0,0.1);
+        }
+        .sidebar h2 {
+            font-size: 22px;
+            margin-bottom: 35px;
+            font-weight: 600;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 14px 22px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li:hover, .sidebar ul li.active {
+            background-color: #08274d;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 320px;
+            padding: 40px;
+            max-width: 1000px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        /* Notification Box */
+        .notification-box {
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        label {
+            font-size: 16px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+        }
+        select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #0a3161;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #08274d;
+        }
+
+        /* Student List */
+        .student-list {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .send-btn {
+            padding: 10px 14px;
+            font-size: 14px;
+            background: #0a3161;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .send-btn:hover {
+            background-color:#004080;
+        }
+
+        /* Success Message */
+        .success-message {
+            margin-top: 20px;
+            padding: 14px;
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<!-- ✅ Profile Box (Only once, top right corner) -->
+  <div style="position: fixed; top: 20px; right: 20px; background-color: #004a99; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; z-index: 1000;">
+    <label for="profileUpload" style="cursor: pointer; margin-right: 10px;">
+      <img id="profilePic" src="photo.jpg" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+    </label>
+    <input type="file" id="profileUpload" accept="image/*" style="display: none;">
+    <span style="color: white; font-size: 16px; font-weight: bold; margin-right: 15px;">Welcome, Admin</span>
+    <button style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 14px; cursor: pointer;">
+      Remove
+    </button>
+  </div>
+
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>College Admin</h2>
+        <ul>
+            <li><a href="demo.html">Dashboard</a></li>
+            <li><a href="branch.html">Manage Branch</a></li>
+            <li><a href="teachers.html">Manage Teachers</a></li>
+            <li><a href="view.html">View Attendance</a></li>
+            <li class="active"><a href="notificationadmin.html">Send Notification</a></li>
+            <li><a href="password change.html">Change Password</a></li>
+            <li><a href="logout.html">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h1>Send Notification</h1>
+
+        <div class="notification-box">
+            <label for="recipient">Select Recipient</label>
+            <select id="recipient">
+                <option value="students">Students (Low Attendance)</option>
+                <option value="teachers">Teachers (Notify About Students)</option>
+            </select>
+
+            <label for="message">Notification Message</label>
+            <textarea id="message" rows="4" placeholder="Enter notification details..."></textarea>
+
+            <button onclick="sendNotification()">Send Notification</button>
+        </div>
+
+        <div class="student-list">
+            <h2>Students with Low Attendance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Attendance %</th>
+                        <th>Classes Needed</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTable">
+                    <!-- Student data will be inserted dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="successMessage" class="success-message">
+            Notification sent successfully!
+        </div>
+    </div>
+
+    <script>
+        // Simulated student data
+        const students = [
+            { name: "John Doe", attendance: 65, neededClasses: 5 },
+            { name: "Jane Smith", attendance: 58, neededClasses: 7 },
+            { name: "Alice Johnson", attendance: 62, neededClasses: 6 }
+        ];
+
+        function loadStudents() {
+            const table = document.getElementById("studentTable");
+            table.innerHTML = "";
+            students.forEach((student, index) => {
+                const row = `<tr>
+                    <td>${student.name}</td>
+                    <td>${student.attendance}%</td>
+                    <td>${student.neededClasses} more</td>
+                    <td><button class="send-btn" onclick="sendStudentNotification(${index})">Send</button></td>
+                </tr>`;
+                table.innerHTML += row;
+            });
+        }
+
+        function sendNotification() {
+            let recipient = document.getElementById("recipient").value;
+            let message = document.getElementById("message").value;
+
+            if (message.trim() === "") {
+                alert("Please enter a message.");
+                return;
+            }
+
+            let successMessage = document.getElementById("successMessage");
+            successMessage.style.display = "block";
+            successMessage.innerHTML = `Notification sent to ${recipient}: "${message}"`;
+
+            setTimeout(() => {
+                successMessage.style.display = "none";
+            }, 3000);
+        }
+
+        function sendStudentNotification(index) {
+            let student = students[index];
+            let message = `Dear ${student.name}, your attendance is ${student.attendance}%. 
+            You need to attend ${student.neededClasses} more classes to meet the requirement.`;
+
+            let successMessage = document.getElementById("successMessage");
+            successMessage.style.display = "block";
+            successMessage.innerHTML = `Notification sent to ${student.name}: "${message}"`;
+
+            setTimeout(() => {
+                successMessage.style.display = "none";
+            }, 3000);
+        }
+
+        // Load students on page load
+        window.onload = loadStudents;
+ // ✅ Profile picture preview
+    document.getElementById("profileUpload").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("profilePic").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    </script>
+
+</body>
+</html>

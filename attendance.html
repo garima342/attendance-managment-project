@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            text-align: center;
+            padding: 20px;
+        }
+        .banner {
+            background: linear-gradient(to right, #004aad, #00aaff);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .banner img {
+            position: absolute;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            margin: auto;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .button, .submit-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .button:hover, .submit-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        #totalPresent {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="logo.png" alt="Logo">
+        <h2>STUDENT ATTENDANCE</h2>
+    </div>
+    <div class="container">
+        <div class="buttons">
+            <select id="lectureSelect" class="dropdown" onchange="setTime()">
+                <option value="" disabled selected>Select Lecture</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Computer Networks">Computer Networks</option>
+                <option value="Operating Systems">Operating Systems</option>
+            </select>
+            <select id="timeSelect" class="dropdown" disabled>
+                <option value="" disabled selected>Select Time</option>
+            </select>
+            <button class="button" onclick="toggleAll()">Select All</button>
+            <button class="button" onclick="document.getElementById('datePicker').showPicker();">Select Date</button>
+            <input type="date" id="datePicker" style="display: none;">
+        </div>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Status</th>
+                </tr>
+                <tbody id="studentTable"></tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <p>Total Present: <span id="totalPresent">0</span> / 50</p>
+            <button class="submit-btn" onclick="calculateAttendance()">Submit Attendance</button>
+        </div>
+    </div>
+    <script>
+        const timeMapping = {
+            "Data Science": "09 AM - 10 AM",
+            "Web Development": "10 AM - 11 AM",
+            "Artificial Intelligence": "11 AM - 12 PM",
+            "Computer Networks": "01 PM - 02 PM",
+            "Operating Systems": "02 PM - 03 PM"
+        };
+        function setTime() {
+            const lecture = document.getElementById("lectureSelect").value;
+            document.getElementById("timeSelect").innerHTML = `<option selected>${timeMapping[lecture]}</option>`;
+        }
+        const studentTable = document.getElementById("studentTable");
+        for (let i = 1; i <= 50; i++) {
+            let row = `<tr>
+                <td>${i}</td>
+                <td>Student ${i}</td>
+                <td>STU${i}</td>
+                <td>
+                    <input type="checkbox" id="status${i}" onclick="calculateAttendance()">
+                </td>
+            </tr>`;
+            studentTable.innerHTML += row;
+        }
+        function calculateAttendance() {
+            let count = document.querySelectorAll("input[type='checkbox']:checked").length;
+            document.getElementById("totalPresent").innerText = count;
+        }
+        function toggleAll() {
+            document.querySelectorAll("input[type='checkbox']").forEach(input => input.checked = true);
+            calculateAttendance();
+        }
+    </script>
+</body>
+</html>

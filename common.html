@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher's Dashboard</title>
+    <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation Bar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #7494ec;
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 1500px;
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.user-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    background: white;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    width: 180px;
+    z-index: 1000;
+}
+
+.dropdown button {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    font-size: 1em;
+    color: black;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dropdown button:hover {
+    background: #f4f4f4;
+    border-radius: 5px;
+}
+
+.user-btn:focus + .dropdown,
+.dropdown:hover {
+    display: block;
+}
+
+/* Buttons */
+button {
+    background: #7494ec;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #5a7bd6;
+    transform: scale(1.05);
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #7494ec;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+}
+
+.sidebar ul li:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+
+.hidden {
+    display: none;
+}
+
+    </style>
+    <script> 
+    
+    </script>
+</head>
+
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">Attendance System</div>
+        <!-- Updated dropdown with proper id matching -->
+           <div class="user-menu">
+                <button id="user-btn" class="user-btn">
+                 <span id="username-display">Profile</span> ▼
+                </button>
+              <div id="dropdown" class="dropdown">  <!-- Added ID to match the script -->
+                <button id="setting">Settings</button>
+                <button id="logout-btn">Logout</button>
+               </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Teacher's Dashboard</h2>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="am.html">Manage Attendance</a></li>
+                <li><a href="report.html">Generate Student Reports</a></li>
+                <li data-section="notifications-section">Notifications</li>
+                <li data-section="academic-calendar">Academic Calendar</li>
+                <li data-section="courses-class-timings">Courses & Class Timings</li>
+            </ul>
+        </aside>        
+    </div>
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const profileBtn = document.getElementById("user-btn");
+    const profileDropdown = document.getElementById("dropdown");  // Using ID here
+
+    if (profileBtn && profileDropdown) {
+        // Toggle dropdown visibility on profile button click
+        profileBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
+            profileDropdown.classList.toggle("hidden");  // Toggle visibility using 'hidden' class
+        });
+
+        // Hide dropdown if clicked outside of profile button or dropdown
+        document.addEventListener("click", function (event) {
+            if (!profileDropdown.contains(event.target) && event.target !== profileBtn) {
+                profileDropdown.classList.add("hidden"); // Add 'hidden' class to hide the dropdown
+            }
+        });
+    }
+
+    // Logout functionality
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+            alert("Logging out...");
+            localStorage.removeItem("username"); // Remove username or other session data
+            window.location.href = "stulogin.html"; // Redirect to login page after logout
+        });
+    }
+});
+</script>
+</body>
+</html>

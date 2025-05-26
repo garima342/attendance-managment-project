@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Attendance - Teacher's Dashboard</title>
+    <style>
+       /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    padding-top: 60px; /* Same value as navbar height */
+}
+
+/* Navigation Bar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #7494ec;
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.user-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    background: white;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    width: 180px;
+    z-index: 1000;
+    margin-right: 40px;
+}
+
+.dropdown button {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    font-size: 1em;
+    color: black;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-right: 50px;
+}
+
+.dropdown button:hover {
+    background: #f4f4f4;
+    border-radius: 5px;
+}
+
+.user-btn:focus + .dropdown,
+.dropdown:hover {
+    display: block;
+}
+
+/* Buttons */
+button {
+    background: #7494ec;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #5a7bd6;
+    transform: scale(1.05);
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #7494ec;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+}
+
+.sidebar ul li:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+
+.hidden {
+    display: none;
+}
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            margin-left: 260px;
+        }
+        @keyframes colorChange {
+            0% { color: navy; }
+            100% { color: deepskyblue; }
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .button, .submit-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .button:hover, .submit-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .submit-btn {
+            font-size: 18px;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-top: 4px;
+            margin-left: 540px;
+        }
+        .dropdownL {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #007bff;
+           
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+        .icon-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: red;
+            border-radius: 20px;
+            transition: 0.4s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+        input:checked + .slider {
+            background-color: green;
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        #totalPresent {
+            font-weight: bold;
+            color: #007bff;
+            transition: 0.3s;
+        }
+        #present{
+            margin-left: 567px;
+        }
+        #take-attendance{
+            font-size: 32px;
+            font-weight: bold;
+            animation: colorChange 2s infinite alternate;
+            margin-left: 475px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">Teacher's Dashboard</div>
+        <div class="user-menu">
+            <button id="user-btn" class="user-btn">
+                <span id="username-display">Profile</span> ▼
+            </button>
+            <div id="dropdown" class="dropdown hidden">
+                <button id="logout-btn">Logout</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        
+        <ul>
+            <li><a href="home.html">Home</a></li>
+                <li><a href="manageat.html">Manage Attendance</a></li>
+                <li><a href="rep.html">Generate Student Reports</a></li>
+                <li><a href="notification.html">Notifications</a></li>
+                <li><a href="calendar.html">Academic Calendar</a></li>
+                <li><a href="courses.html">Courses & Class Timings</a></li>
+        </ul>
+    </aside>
+
+    <div class="container">
+        <h2><span id="take-attendance">TAKE ATTENDANCE</span></h2>
+        <div class="buttons">
+            <select id="lectureSelect" class="dropdownL" onchange="setTime()">
+                <option value="" disabled selected>Select Lecture</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Computer Networks">Computer Networks</option>
+                <option value="Operating Systems">Operating Systems</option>
+            </select>
+            <select id="timeSelect" class="dropdownL" disabled>
+                <option value="" disabled selected>Select Time</option>
+            </select>
+            <button class="button" onclick="toggleAll()">Select All</button>
+            <button class="button" onclick="document.getElementById('datePicker').showPicker();">Select Date</button>
+            <input type="date" id="datePicker" style="display: none;">
+
+        </div>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Icon</th>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Status</th>
+                </tr>
+                <tbody id="studentTable"></tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <p><span id="present">Total Present:</span><span id="totalPresent">0</span>/<span id="totalStudents">0</span></p>
+
+            <button class="submit-btn" onclick="calculateAttendance()">Submit Attendance</button>
+
+        </div>
+    </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const profileBtn = document.getElementById("user-btn");
+        const profileDropdown = document.getElementById("dropdown");
+
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener("click", function (event) {
+                event.stopPropagation();
+                profileDropdown.classList.toggle("hidden");
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!profileDropdown.contains(event.target) && event.target !== profileBtn) {
+                    profileDropdown.classList.add("hidden");
+                }
+            });
+        }
+
+        const logoutBtn = document.getElementById("logout-btn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", function () {
+                alert("Logging out...");
+                localStorage.removeItem("username");
+                window.location.href = "teachlogin.html";
+            });
+        }
+    });
+
+    const timeMapping = {
+        "Data Science": "09 AM - 10 AM",
+        "Web Development": "10 AM - 11 AM",
+        "Artificial Intelligence": "11 AM - 12 PM",
+        "Computer Networks": "01 PM - 02 PM",
+        "Operating Systems": "02 PM - 03 PM"
+    };
+
+    function setTime() {
+        const lecture = document.getElementById("lectureSelect").value;
+        const timeSelect = document.getElementById("timeSelect");
+        timeSelect.innerHTML = `<option selected>${timeMapping[lecture]}</option>`;
+        timeSelect.disabled = false;
+    }
+
+    const studentTable = document.getElementById("studentTable");
+    for (let i = 1; i <= 15; i++) {
+        let row = `<tr>
+            <td><img src="icon.jpg" class="icon-img" alt="Student Icon"></td>
+            <td>${i}</td>
+            <td>Student ${i}</td>
+            <td>STU${i}</td>
+            <td>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="status${i}" onclick="countAttendance()">
+                    <span class="slider"></span>
+                </label>
+            </td>
+        </tr>`;
+        studentTable.innerHTML += row;
+    }
+
+    function toggleAll() {
+        document.querySelectorAll(".toggle-switch input").forEach(input => input.checked = true);
+        countAttendance();
+    }
+
+    function countAttendance() {
+        const totalStudents = document.querySelectorAll(".toggle-switch input").length;
+        const presentStudents = document.querySelectorAll(".toggle-switch input:checked").length;
+        document.getElementById("totalPresent").innerText = presentStudents;
+        document.getElementById("totalStudents").innerText = totalStudents;
+    }
+
+    function validateForm() {
+        const lecture = document.getElementById("lectureSelect").value;
+        const date = document.getElementById("datePicker").value;
+
+        if (!lecture) {
+            alert("Please select a lecture.");
+            return false;
+        }
+
+        if (!date) {
+            alert("Please select a date.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function calculateAttendance() {
+        if (!validateForm()) {
+            return;
+        }
+
+        // Count present students before showing the message
+        countAttendance();
+
+        const date = document.getElementById("datePicker").value;
+        const formattedDate = new Date(date).toLocaleDateString('en-IN', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        alert(`🎉 Congratulations! Attendance for ${formattedDate} has been successfully submitted.`);
+    }
+</script>
+</body>
+</html>

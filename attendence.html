@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Attendance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .attendance-container {
+            width: 90%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .month {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            background: #fff;
+        }
+        .month h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .day {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .present { background: #4CAF50; color: white; }
+        .absent { background: #F44336; color: white; }
+        .holiday { background: #FFEB3B; color: black; }
+        .summary {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="attendance-container">
+    <h1 style="text-align:center;">View Attendance</h1>
+
+    <div id="attendance-summary" class="summary"></div>
+
+    <div id="attendance-calendar"></div>
+</div>
+
+<script>
+    // Dummy Attendance Data (Replace with data from database)
+    const attendanceData = {
+        "January": { "1": "present", "2": "absent", "3": "holiday", "4": "present", "5": "present" },
+        "February": { "10": "present", "11": "absent", "12": "present", "13": "holiday" },
+        "March": { "5": "present", "6": "present", "7": "absent", "8": "holiday" },
+        "April": { "15": "absent", "16": "present", "17": "holiday" },
+        "May": { "3": "present", "4": "absent", "5": "holiday" },
+        "June": { "8": "present", "9": "absent", "10": "holiday" },
+        "July": { "22": "present", "23": "absent" },
+        "August": { "12": "present", "13": "holiday" },
+        "September": { "7": "absent", "8": "present", "9": "holiday" },
+        "October": { "1": "present", "2": "absent", "3": "holiday" },
+        "November": { "10": "present", "11": "holiday" },
+        "December": { "15": "absent", "16": "present" }
+    };
+
+    function generateCalendar() {
+        let totalPresent = 0;
+        let totalAbsent = 0;
+        let totalHolidays = 0;
+        let totalClasses = 0;
+
+        const attendanceCalendar = document.getElementById("attendance-calendar");
+        attendanceCalendar.innerHTML = "";
+
+        for (const [month, days] of Object.entries(attendanceData)) {
+            let monthDiv = document.createElement("div");
+            monthDiv.classList.add("month");
+            monthDiv.innerHTML = `<h2>${month}</h2>`;
+
+            let calendarDiv = document.createElement("div");
+            calendarDiv.classList.add("calendar");
+
+            for (let i = 1; i <= 30; i++) {  // Assuming 30 days per month
+                let dayDiv = document.createElement("div");
+                dayDiv.classList.add("day");
+
+                if (days[i]) {
+                    dayDiv.classList.add(days[i]);
+                    if (days[i] === "present") totalPresent++;
+                    if (days[i] === "absent") totalAbsent++;
+                    if (days[i] === "holiday") totalHolidays++;
+                }
+                totalClasses++;
+
+                dayDiv.innerText = i;
+                calendarDiv.appendChild(dayDiv);
+            }
+
+            monthDiv.appendChild(calendarDiv);
+            attendanceCalendar.appendChild(monthDiv);
+        }
+
+        document.getElementById("attendance-summary").innerHTML = `
+            <strong>Total Classes:</strong> ${totalClasses} |
+            <span style="color: green;"><strong>Present:</strong> ${totalPresent}</span> |
+            <span style="color: red;"><strong>Absent:</strong> ${totalAbsent}</span> |
+            <span style="color: orange;"><strong>Holidays:</strong> ${totalHolidays}</span>
+        `;
+    }
+
+    generateCalendar();
+</script>
+
+</body>
+</html>
+

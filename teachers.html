@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Teachers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .sidebar {
+      width: 280px;
+      height: 100vh;
+      background-color: #003366;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 40px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .sidebar a:hover {
+      background-color: #004080;
+    }
+
+    .main-content {
+      margin-left: 300px;
+      padding: 120px 30px 30px 30px; /* Top padding for profile box */
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #003366;
+      color: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .add-teacher-btn {
+      background-color: #00bfff;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .add-teacher-btn:hover {
+      background-color: #004080;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    .department {
+      margin-bottom: 30px;
+    }
+
+    .department h2 {
+      color: #003366;
+    }
+
+    .teacher-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .teacher-list li {
+      background-color: #f4f4f4;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .delete-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: darkred;
+    }
+
+    /* Modal */
+    #addTeacherModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #addTeacherModal .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      position: relative;
+    }
+
+    #addTeacherModal span {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+    }
+
+    /* Profile box */
+    .profile-box {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #004a99;
+      padding: 10px 20px;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .profile-box img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .profile-box span {
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    .profile-box button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Profile Box -->
+  <div class="profile-box">
+    <label for="profileUpload">
+      <img id="profilePic" src="photo.jpg" alt="Profile">
+    </label>
+    <input type="file" id="profileUpload" accept="image/*" style="display: none;">
+    <span>Welcome, Admin</span>
+    <button>Remove</button>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>College Admin</h2>
+    <a href="demo.html">Dashboard</a>
+    <a href="branch.html">Manage Branch</a>
+    <a href="teachers.html">Manage Teachers</a>
+    <a href="view.html">View Attendance</a>
+    <a href="notificationadmin.html">Notifications</a>
+    <a href="password change.html">Change Password</a>
+    <a href="logout.html">Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header">
+      <h1>Manage Teachers</h1>
+      <button class="add-teacher-btn">ADD TEACHERS</button>
+    </div>
+    <div class="container">
+      <!-- Teacher data will be dynamically inserted -->
+    </div>
+  </div>
+
+  <!-- Modal for Adding Teacher -->
+  <div id="addTeacherModal">
+    <div class="modal-content">
+      <span onclick="closeModal()">&times;</span>
+      <h3>Add New Teacher</h3>
+      <form id="teacherForm">
+        <label for="teacherName">Name:</label>
+        <input type="text" id="teacherName" name="teacherName" required />
+
+        <label for="teacherDept">Department:</label>
+        <select id="teacherDept" name="teacherDept" required>
+          <option value="">Select Department</option>
+          <option value="BCA">BCA</option>
+          <option value="BTECH">BTECH</option>
+        </select>
+
+        <button type="submit" style="padding:10px 15px; background:#003366; color:white; border:none; border-radius:5px;">Add</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const departments = {
+      BCA: ["Teacher 1", "Teacher 2", "Teacher 3"],
+      BTECH: ["Teacher 4", "Teacher 5", "Teacher 6"]
+    };
+
+    function renderDepartments() {
+      const container = document.querySelector(".container");
+      container.innerHTML = "";
+
+      Object.keys(departments).forEach((dept) => {
+        const deptDiv = document.createElement("div");
+        deptDiv.className = "department";
+
+        const deptTitle = document.createElement("h2");
+        deptTitle.textContent = `${dept} Department`;
+
+        const teacherList = document.createElement("ul");
+        teacherList.className = "teacher-list";
+
+        departments[dept].forEach((teacher, index) => {
+          const teacherItem = document.createElement("li");
+          teacherItem.innerHTML = `
+            ${teacher}
+            <button class="delete-btn" onclick="deleteTeacher('${dept}', ${index})">Delete</button>
+          `;
+          teacherList.appendChild(teacherItem);
+        });
+
+        deptDiv.appendChild(deptTitle);
+        deptDiv.appendChild(teacherList);
+        container.appendChild(deptDiv);
+      });
+    }
+
+    function deleteTeacher(dept, index) {
+      if (confirm("Are you sure you want to delete this teacher?")) {
+        departments[dept].splice(index, 1);
+        renderDepartments();
+        alert("Deleted successfully");
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("addTeacherModal").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderDepartments();
+
+      document.querySelector(".add-teacher-btn").addEventListener("click", () => {
+        document.getElementById("addTeacherModal").style.display = "flex";
+      });
+
+      document.getElementById("teacherForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("teacherName").value.trim();
+        const dept = document.getElementById("teacherDept").value;
+
+        if (name === "" || dept === "") {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        if (!departments[dept]) {
+          departments[dept] = [];
+        }
+
+        departments[dept].push(name);
+        renderDepartments();
+        closeModal();
+        this.reset();
+        alert("Added successfully");
+      });
+    });
+
+    // ✅ Profile picture preview
+    document.getElementById("profileUpload").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("profilePic").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

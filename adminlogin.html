@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="s1.css">
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box login">
+            <form action="login.php" method="post">
+                <h1>Login</h1>
+                <div class="input-box">
+                    <input type="text" name="u" id="u" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="p" id="p" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="forgot-link">
+                    <a href="#">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <div class="form-box register">
+            <form action="reg.php" method="post" id="registerForm">
+                <h1>Registration</h1>
+
+                <div class="input-box">
+                    <input type="text" id="ur" name="ur" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <span class="error" id="ue"></span> 
+
+                <div class="input-box">
+                    <input type="text" id="er" name="er" placeholder="Email" required>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <span class="error" id="ee"></span> 
+
+                <div class="input-box">
+                    <input type="password" id="pr" name="pr" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <span class="error" id="pe"></span> 
+
+                <div class="input-box">
+                    <input type="text" id="rr" name="rr" placeholder="Role" required>
+                    <i class='bx bxs-child'></i>
+                </div>
+                <span class="error" id="re"></span> 
+
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome!</h1>
+                <p>Don't have an account?</p>
+                <button class="btn register-btn">Register</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account?</p>
+                <button class="btn login-btn">Login</button>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    const container = document.querySelector('.container');
+    const registerBtn = document.querySelector('.register-btn');
+    const loginBtn = document.querySelector('.login-btn');
+
+    registerBtn.addEventListener('click', () => {
+        container.classList.add('active');
+    });
+
+    loginBtn.addEventListener('click', () => {
+        container.classList.remove('active');
+    });
+
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+        let valid = true;
+        const username = document.getElementById("ur").value.trim();
+        const password = document.getElementById("pr").value.trim();
+        const email = document.getElementById("er").value.trim();
+        const role = document.getElementById("rr").value.trim().toLowerCase(); // lowercasing for comparison
+
+        const usernameError = document.getElementById("ue");
+        const emailError = document.getElementById("ee");
+        const passwordError = document.getElementById("pe");
+        const roleError = document.getElementById("re");
+
+        usernameError.textContent = "";
+        emailError.textContent = "";
+        passwordError.textContent = "";
+        roleError.textContent = "";
+
+        // Validation 1: No field should be empty
+        if (username === "") {
+            usernameError.textContent = "Username cannot be empty!";
+            valid = false;
+        }
+        if (email === "") {
+            emailError.textContent = "Email cannot be empty!";
+            valid = false;
+        }
+        if (password === "") {
+            passwordError.textContent = "Password cannot be empty!";
+            valid = false;
+        }
+        if (role === "") {
+            roleError.textContent = "Role cannot be empty!";
+            valid = false;
+        }
+
+        // Validation 2: Username must only contain letters
+        const usernamePattern = /^[A-Za-z]+$/;
+        if (username !== "" && !usernamePattern.test(username)) {
+            usernameError.textContent = "Username can only contain letters (A-Z, a-z)!";
+            valid = false;
+        }
+
+        // Validation 3: Email format check
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (email !== "" && !emailPattern.test(email)) {
+            emailError.textContent = "Invalid email format!";
+            valid = false;
+        }
+
+        // Validation 4: Password strength
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (password !== "" && !passwordPattern.test(password)) {
+            passwordError.textContent = "Password must be at least 8 characters long and contain letters & numbers!";
+            valid = false;
+        }
+
+        // Validation 5: Role must be either 'student' or 'teacher'
+        if (role !== "teacher" && role !== "student") {
+            roleError.textContent = "Role must be either 'teacher' or 'student'!";
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+</script>
+</body>
+</html>

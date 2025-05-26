@@ -1,0 +1,150 @@
+<html>
+<head>
+    <title>Banasthali Vidyapith</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+            background: linear-gradient(120deg, #a6c1ee, #fbc2eb);
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header:hover {
+            background-color: #e9ecef;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            margin-right: 20px;
+        }
+
+        .logo img {
+            width: 60px;
+            height: auto;
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .college-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .college-quote {
+            font-size: 16px;
+            color: #555;
+            margin: 0;
+        }
+
+        .animated-text {
+            text-align: center;
+            margin: 30px auto;
+            font-size: 28px;
+            font-weight: bold;
+            color: #444;
+            opacity: 0;
+            animation: fadein 5s forwards;
+        }
+
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 350px;
+            display: block;
+        }
+
+        .card-text {
+            padding: 15px;
+            font-size: 18px;
+            text-align: center;
+            color: #333;
+        }
+
+        .card-text h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="bv.jpg" alt="Banasthali Vidyapith Logo">
+        </div>
+        <div class="header-text">
+            <h1 class="college-name">Banasthali Vidyapith</h1>
+            <p class="college-quote">University for Women: University with a Difference</p>
+        </div>
+    </header>
+
+    <div class="animated-text">Your Smart Online Attendance Solution</div>
+
+    <div class="cards-container">
+        <a href="adminlogin.html" class="card">
+            <img src="admin.jpg" alt="admin">
+            <div class="card-text">
+                <h3>Admin</h3>
+            </div>
+        </a>
+
+        <a href="teachlogin.html" class="card">
+            <img src="teacher.jpg" alt="teacher">
+            <div class="card-text">
+                <h3>Teacher</h3>
+            </div>
+        </a>
+
+        <a href="stulogin.html" class="card">
+            <img src="student.jpg" alt="student">
+            <div class="card-text">
+                <h3>Student</h3>
+            </div>
+        </a>
+    </div>
+</body>
+</html>

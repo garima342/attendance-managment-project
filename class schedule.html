@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #0056b3;
+      color: white;
+      position: fixed;
+      height: 100%;
+      padding: 20px 0;
+      border-radius: 0 20px 20px 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 15px;
+      color: white;
+      text-decoration: none;
+      margin: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: white;
+      color: #0056b3;
+    }
+
+    .content {
+      margin-left: 270px;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px;
+      background-color: #e0e0e0;
+      border-bottom: 2px solid #ccc;
+      border-radius: 10px;
+      gap: 20px;
+      position: relative;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-dropdown img {
+      border-radius: 50%;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 120px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .dropdown-content a {
+      color: #333;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .schedule {
+      display: none;
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #0056b3;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    td[colspan="5"] {
+      background-color: #ffcc00;
+      color: black;
+      font-weight: bold;
+    }
+  </style>
+
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById("dropdownMenu");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    window.onclick = function (event) {
+      const profileDropdown = document.querySelector(".profile-dropdown");
+      const dropdown = document.getElementById("dropdownMenu");
+      if (!profileDropdown.contains(event.target)) {
+        dropdown.style.display = "none";
+      }
+    };
+function showSchedule() {
+      const schedule = document.querySelector(".schedule");
+      schedule.style.display = schedule.style.display === "block" ? "none" : "block";
+    }
+    // Logout functionality
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+            alert("Logging out...");
+            localStorage.removeItem("username"); // Remove username or other session data
+            window.location.href = "stulogin.html"; // Redirect to login page after logout
+        });
+    }
+});
+
+  </script>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Student Dashboard</h2>
+    <a href="shome.html">Home</a>
+    <a href="class schedule.html">Class Schedule</a>
+    <a href="vattendence.html">View Attendance</a>
+    <a href="applyleave.html">Apply Leave</a>
+    <a href="complaint.html">Apply Complaint</a>
+    <a href="calendar.html">Academic Calendar</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="header">
+      <div class="logo">
+        <img src="Ss.png" alt="Logo">
+      </div>
+      <div class="profile-dropdown">
+        <img src="pp.jpeg" alt="Profile Picture" onclick="toggleDropdown()" />
+        <div class="dropdown-content" id="dropdownMenu">
+          <button id="logout-btn">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule Section -->
+    <div class="schedule">
+      <h3>Class Schedule</h3>
+      <table>
+        <tr>
+          <th>Time</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+        </tr>
+        <tr>
+          <td>9:00 AM - 10:00 AM</td>
+          <td>Math</td>
+          <td>Science</td>
+          <td>English</td>
+          <td>Social Studies</td>
+          <td>Physical Education</td>
+        </tr>
+        <tr>
+          <td>10:00 AM - 11:00 AM</td>
+          <td>Science</td>
+          <td>Math</td>
+          <td>History</td>
+          <td>English</td>
+          <td>Art</td>
+        </tr>
+        <tr>
+          <td>11:00 AM - 12:00 PM</td>
+          <td>English</td>
+          <td>Physics</td>
+          <td>Math</td>
+          <td>Chemistry</td>
+          <td>Computer Science</td>
+        </tr>
+        <tr>
+          <td>12:00 PM - 1:00 PM</td>
+          <td colspan="5">Lunch Break</td>
+        </tr>
+        <tr>
+          <td>1:00 PM - 2:00 PM</td>
+          <td>Chemistry</td>
+          <td>English</td>
+          <td>Physics</td>
+          <td>Math</td>
+          <td>Biology</td>
+        </tr>
+        <tr>
+          <td>2:00 PM - 3:00 PM</td>
+          <td>Computer Science</td>
+          <td>History</td>
+          <td>Geography</td>
+          <td>Economics</td>
+          <td>Physical Education</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

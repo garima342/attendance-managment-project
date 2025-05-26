@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Logout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            background-color: #f0f8ff;
+        }
+        /* Sidebar Styling */
+        .sidebar {
+            width: 220px;
+            background-color: #003366;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .sidebar ul li a:hover,
+        .sidebar ul li.active a {
+            background: rgba(255, 255, 255, 0.2);
+            padding-left: 10px;
+        }
+        
+        /* Content Styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 50px;
+            margin-left: 240px; /* Adjust to avoid overlapping with sidebar */
+            text-align: center;
+        }
+        .logout-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: inline-block;
+            text-align: center;
+        }
+        .logout-box h1 {
+            color: #003366;
+            margin-bottom: 15px;
+        }
+        .logout-box p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #00509e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #004080;
+        }
+        .notification {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!-- ✅ Profile Box (Only once, top right corner) -->
+  <div style="position: fixed; top: 20px; right: 20px; background-color: #004a99; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; z-index: 1000;">
+    <label for="profileUpload" style="cursor: pointer; margin-right: 10px;">
+      <img id="profilePic" src="photo.jpg" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+    </label>
+    <input type="file" id="profileUpload" accept="image/*" style="display: none;">
+    <span style="color: white; font-size: 16px; font-weight: bold; margin-right: 15px;">Welcome, Admin</span>
+    <button style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 14px; cursor: pointer;">
+      Remove
+    </button>
+  </div>
+
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>College Admin</h2>
+        <ul>
+             <li><a href="demo.html">Dashboard</a></li>
+            <li><a href="branch.html">Manage Branch</a></li>
+            <li><a href="teachers.html">Manage Teachers</a></li>
+            <li><a href="view.html">View Attendance</a></li>
+            <li><a href="notificationadmin.html">Send Notification</a></li>
+            <li><a href="password change.html">Change Password</a></li>
+            <li><a href="logout.html">Logout</a></li>
+
+            
+        </ul>
+    </div>
+
+    <!-- Logout Confirmation -->
+    <div class="main-content">
+        <div class="logout-box">
+            <h1>Logout</h1>
+            <p>Are you sure you want to log out?</p>
+            <button onclick="logout()">Logout</button>
+            <div id="notification" class="notification">Logged out successfully!</div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            // Show the logout success message
+            document.getElementById('notification').style.display = 'block';
+            
+            // Redirect to login page after 3 seconds
+            setTimeout(() => {
+                window.location.href = "head2.html";  // Change to your actual login page
+            }, 3000);
+        }
+ // ✅ Profile picture preview
+    document.getElementById("profileUpload").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("profilePic").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    </script>
+
+</body>
+</html>

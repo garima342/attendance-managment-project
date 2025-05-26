@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher's Dashboard</title>
+    <style>
+       /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    padding-top: 60px; /* Same value as navbar height */
+}
+
+/* Navigation Bar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #7494ec;
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 30px; /* Adjust as needed */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    white-space: nowrap; /* Prevents text from wrapping */
+    width: max-content; /* Ensures the text takes only necessary space */
+    margin-top: 60px;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.user-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    background: white;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    width: 180px;
+    z-index: 1000;
+}
+
+.dropdown button {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    font-size: 1em;
+    color: black;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dropdown button:hover {
+    background: #f4f4f4;
+    border-radius: 5px;
+}
+
+.user-btn:focus + .dropdown,
+.dropdown:hover {
+    display: block;
+}
+
+/* Buttons */
+button {
+    background: #7494ec;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #5a7bd6;
+    transform: scale(1.05);
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #7494ec;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+}
+
+.sidebar ul li:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+
+.hidden {
+    display: none;
+}
+.container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-left: 290px;
+            margin-top: 40px;
+            position: relative;
+        }
+        .banner {
+            background: linear-gradient(135deg, #0033cc, #66a3ff);
+            padding: 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+        .title-container {
+            text-align: center;
+            flex: 1;
+        }
+        .university-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .report-title {
+            font-size: 18px;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            min-width: 600px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid #0055cc;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #0055cc;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #cce0ff;
+        }
+        tr:nth-child(odd) {
+            background-color: #e6f2ff;
+        }
+        tr:hover {
+            background-color: #99c2ff;
+            transition: 0.3s;
+        }
+        .notice {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: left;
+            background: #e6f2ff;
+            padding: 10px;
+            border-left: 5px solid #0033cc;
+            border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+            .banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+            .university-name {
+                font-size: 20px;
+            }
+            .report-title {
+                font-size: 16px;
+            }
+            th, td {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+.send-report-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.send-report-btn {
+    background: linear-gradient(to right, #0033cc, #66a3ff);
+    color: white;
+    padding: 15px 50px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.4s ease, transform 0.2s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.send-report-btn:hover {
+    background: linear-gradient(to right, #0055cc, #99ccff);
+    transform: translateY(-2px) scale(1.05);
+}
+
+
+    </style>
+    <script> 
+    function updateAttendanceMessage() {
+            let attendanceBelowThreshold = false;
+            let rows = document.querySelectorAll(".attendance-row");
+            rows.forEach(row => {
+                let percentage = parseFloat(row.querySelector(".attendance-percent").innerText);
+                if (percentage < 70) {
+                    attendanceBelowThreshold = true;
+                }
+            });
+            
+            let message = attendanceBelowThreshold ? 
+                "You are requested to attend the classes regularly. If the shortage in attendance keeps continuing, you may not be allowed to appear in the University Examination." : 
+                "Soo far you have a good attendance record. Keep going!";
+            
+            document.getElementById("attendance-message").innerText = message;
+        }
+    </script>
+</head>
+
+<body onload="updateAttendanceMessage()"></body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">Teacher's Dashboard</div>
+        <!-- Updated dropdown with proper id matching -->
+           <div class="user-menu">
+                <button id="user-btn" class="user-btn">
+                 <span id="username-display">Profile</span> ▼
+                </button>
+              <div id="dropdown" class="dropdown">  <!-- Added ID to match the script -->
+                        <button id="logout-btn">Logout</button>
+               </div>
+            </div>
+        </div>
+    </header>
+   
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+       
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="manageat.html">Manage Attendance</a></li>
+                <li><a href="rep.html">Generate Student Reports</a></li>
+                <li><a href="notification.html">Notifications</a></li>
+                <li><a href="calendar.html">Academic Calendar</a></li>
+                <li><a href="courses.html">Courses & Class Timings</a></li>
+            </ul>
+        </aside>        
+    </div>
+
+        <div class="container">
+            <div class="banner">
+                <img src="bv.jpg" alt="University Logo" class="logo">
+                <div class="title-container">
+                    <div class="university-name">Banasthali Vidyapeeth</div>
+                    <div class="report-title">Monthly Attendance Report</div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Smartcard ID</th>
+                        <th>Roll No.</th>
+                        <th>Class</th>
+                    </tr>
+                    <tr>
+                        <td>{{ student_name }}</td>
+                        <td>{{ student_id }}</td>
+                        <td>{{ roll_no }}</td>
+                        <td>BCA III Year</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <p class="notice">Subject - Attendance record of Mrs. {{ student_name }}</p>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Lecture Delivered</th>
+                        <th>Lecture Attended</th>
+                        <th>Attendance %</th>
+                    </tr>
+                    {% for subject, data in attendance_data.items() %}
+                    <tr class="attendance-row">
+                        <td>{{ subject }}</td>
+                        <td>{{ data.lectures_delivered }}</td>
+                        <td>{{ data.lectures_attended }}</td>
+                        <td class="attendance-percent">{{ data.attendance_percentage }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            
+            <p class="notice" id="attendance-message"></p>
+        </div>
+<p class="notice" id="attendance-message"></p>
+
+<!-- Send Report Button -->
+<div class="send-report-container">
+    <button class="send-report-btn">Send Report</button>
+</div>
+
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const profileBtn = document.getElementById("user-btn");
+    const profileDropdown = document.getElementById("dropdown");  // Using ID here
+
+    if (profileBtn && profileDropdown) {
+        // Toggle dropdown visibility on profile button click
+        profileBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
+            profileDropdown.classList.toggle("hidden");  // Toggle visibility using 'hidden' class
+        });
+
+        // Hide dropdown if clicked outside of profile button or dropdown
+        document.addEventListener("click", function (event) {
+            if (!profileDropdown.contains(event.target) && event.target !== profileBtn) {
+                profileDropdown.classList.add("hidden"); // Add 'hidden' class to hide the dropdown
+            }
+        });
+    }
+
+    // Logout functionality
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+            alert("Logging out...");
+            localStorage.removeItem("username"); // Remove username or other session data
+            window.location.href = "teachlogin.html"; // Redirect to login page after logout
+        });
+    }
+});
+</script>
+<script>
+    document.querySelector(".send-report-btn").addEventListener("click", function () {
+        alert("Report has been sent successfully!");
+        // Add real report sending functionality here
+    });
+</script>
+
+</body>
+</html>

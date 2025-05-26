@@ -1,0 +1,397 @@
+<html>
+    <head>
+        <title> Manage attendance </title>
+        <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation Bar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #7494ec;
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 1500px;
+    margin-top: 0;
+    height: 30px;
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.user-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    background: white;
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    width: 180px;
+    z-index: 1000;
+}
+
+.dropdown button {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    font-size: 1em;
+    color: black;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dropdown button:hover {
+    background: #f4f4f4;
+    border-radius: 5px;
+}
+
+.user-btn:focus + .dropdown,
+.dropdown:hover {
+    display: block;
+}
+
+/* Buttons */
+button {
+    background: #7494ec;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #5a7bd6;
+    transform: scale(1.05);
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #7494ec;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+}
+
+.sidebar ul li:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    margin-left:270px; /* Ensure space for sidebar */
+    margin-top: 0px; /* Push content below the navbar */
+    padding: 10px;
+    width: calc(100% - 230px); /* Make it fit within screen */
+}
+
+.hidden {
+    display: none;
+}
+
+.ma-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Three columns */
+        grid-auto-rows: auto;
+        gap: 60px;
+        max-width: 200px;
+        margin-left:590px;
+        margin-top: 70px;
+        text-align: center;
+        justify-content: center;
+}
+
+/* Ensuring Cards are Uniform */
+.card {
+    width: 370px;
+    height: 200px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+}
+
+/* Hover Effect */
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Make the 5th card span across two columns */
+.card:nth-child(5) {
+    grid-column: span 2; /* Takes up two columns */
+}
+
+/* 🎬 Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Styling for Titles */
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.card button {
+    background: #7494ec;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.card button:hover {
+    background: #5a7ad1;
+    transform: scale(1.05);
+}
+
+.card h2 img {
+    width: 50px;  /* Resize icons */
+    height: 30px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.user-menu img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: inline;
+}
+.card img{
+    width: 100%;
+    height: 200px;
+    display: block;
+}
+.card a{
+    text-decoration: none;
+    color: darkblue;
+}
+.attendance-header {
+    text-align: center; 
+    font-size: 1.1rem; 
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(90deg, #5a7bd1, #7ea1f8);
+    padding: 5px 15px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    width: 40%;
+    margin: 5px auto;
+    justify-content: center;
+    align-items: center;
+    height: 90px;
+    margin-top: 70px;
+
+    /* Initial Animation State */
+    opacity: 0;
+    transform: translateY(-30px);
+    animation: fadeInSlide 1s ease-out forwards;
+}
+
+/* Smaller size for second line */
+#sub-text {
+    font-size: 0.9rem; /* Smaller than main text */
+    font-weight: normal;
+    display: block;
+    margin-top: -20px;
+    opacity: 0.9;
+}
+
+/* Animation for Smooth Appearance */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* NEW HOVER EFFECT - Soft Glow Instead of Pulse */
+.attendance-header:hover {
+    box-shadow: 0px 10px 20px rgba(90, 123, 209, 0.6); /* Soft glow effect */
+    transform: scale(1.02);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+</style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">Attendance System</div>
+        <!-- Updated dropdown with proper id matching -->
+        <div class="user-menu">
+            <button id="user-btn" class="user-btn">
+                <img src="profilew.jpeg">
+             <span id="username-display">Profile</span> ▼
+            </button>
+          <div id="dropdown" class="dropdown">  
+            <button id="logout-btn">Logout</button>
+           </div>
+        </div>
+        </div>
+    </header>
+    
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Teacher's Dashboard</h2>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="manageat.html">Manage Attendance</a></li>
+                <li><a href="rep.html">Generate Student Reports</a></li>
+                <li><a href="notification.html">Notifications</a></li>
+                <li><a href="calendar.html">Academic Calendar</a></li>
+                <li><a href="courses.html">Courses & Class Timings</a></li>
+            </ul>
+        </aside>        
+    </div>
+
+    <main class="content">
+        <!-- Header Section -->
+        <div class="attendance-header">
+            <h1>Manage Attendance</h1>
+            <p><span id="sub-text">Mark and track student attendance easily</span></p>
+        </div>
+            <!-- Manage attendance page (Cards) -->
+            <section class="ma-cards">
+                <div class="card">
+                    <a href="ta.html">
+                    <img src="takeat.jpg" alt="todays-attendance">
+                    <h2>Take attendance</h2></a>
+                </div>
+
+                <div class="card">
+                        <a href="c.html">
+                        <img src="viewat.jpeg" alt="view-attendance">
+                        <h2>View attendance</h2></a>                      
+                </div>
+
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const profileBtn = document.getElementById("user-btn");
+    const profileDropdown = document.getElementById("dropdown");  // Using ID here
+
+    if (profileBtn && profileDropdown) {
+        // Toggle dropdown visibility on profile button click
+        profileBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
+            profileDropdown.classList.toggle("hidden");  // Toggle visibility using 'hidden' class
+        });
+
+        // Hide dropdown if clicked outside of profile button or dropdown
+        document.addEventListener("click", function (event) {
+            if (!profileDropdown.contains(event.target) && event.target !== profileBtn) {
+                profileDropdown.classList.add("hidden"); // Add 'hidden' class to hide the dropdown
+            }
+        });
+    }
+
+    // Logout functionality
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+            alert("Logging out...");
+            localStorage.removeItem("username"); // Remove username or other session data
+            window.location.href = "teachlogin.html"; // Redirect to login page after logout
+        });
+    }
+});
+</script>
+</body>
+</html>

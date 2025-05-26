@@ -1,0 +1,48 @@
+<html>
+<head>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="s2.css">
+</head>
+
+<body>
+  <header>
+        <div class="logo">
+            <img src="bv.jpg" alt="Banasthali Vidyapith Logo">
+        </div>
+        <div class="header-text">
+            <h1 class="college-name">Banasthali Vidyapith</h1>
+            <p class="college-quote">University for Women: University with a Difference</p>
+        </div>
+    </header>
+<div class="container">
+  <div class="form-box login">
+    <form action="slogin.php" method="post">
+	 <h1>Login</h1>
+	 <div class="input-box">
+	  <input type="text" id="us" name="ut" class="us" placeholder="Username"required>
+	  <i class='bx bxs-user'></i>
+	 </div>
+	 <div class="input-box">
+	  <input type="password" id="ps" name="ps" placeholder="Password"required>
+	  <i class='bx bxs-lock-alt'></i>
+	 </div>
+	 <div class="forgot-link">
+	  <a href="#">Forgot password?</a>
+	 </div>
+     
+      <button onclick="loginTeacher()" class="btn">Login</button>
+	  <p id = "loginMessage"> </p>
+	  <p>You can visit your website with social platforms</p>
+	  <div class="social-icons">
+	   <a href="#"><i class='bx bxl-google'></i></a>
+	   <a href="#"><i class='bx bxl-facebook'></i></a>
+	   <a href="#"><i class='bx bxl-instagram'></i></a>
+	  </div>
+	
+	</form>
+  </div>
+  </div>
+
+  </body>
+  
+  </html>

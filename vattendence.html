@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard - View Attendance</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .dashboard {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #0056b3;
+      color: white;
+      position: fixed;
+      height: 100%;
+      padding: 20px 0;
+      border-radius: 0 20px 20px 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      padding: 0;
+      margin:  0;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 15px ;
+      color: white;
+      text-decoration: none;
+      margin: 10px;
+      border-radius: 10px;
+      transition:background-color 0.3s, color 0.3s;
+    }
+
+    .sidebar a:hover{
+      background-color: white;
+      color: #0056b3;
+    }
+
+    .main-content {
+      margin-left: 270px;
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ddd;
+      padding: 10px;
+      border-radius: 10px;
+      border-bottom: 2px solid #ccc;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .profile-dropdown img {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 120px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .dropdown-content a {
+      color: #333;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+  
+    .content {
+      padding: 30px;
+    }
+
+    .student-info {
+      margin-bottom: 30px;
+    }
+
+    .student-info p {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .highlight {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Student Dashboard</h2>
+    <ul>
+      <li><a href="shome.html">Home</a></li>
+      <li><a href="class schedule.html">Class Schedule</a></li>
+      <li><a href="vattendence.html" class="active">View Attendance</a></li>
+      <li><a href="applyleave.html">Apply Leave</a></li>
+      <li><a href="complaint.html">Apply Complaint</a></li>
+      <li><a href="calender.html">Academic Calendar</a></li>
+    </ul>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="topbar">
+      <div class="logo">
+        <img src="Ss.png" alt="Logo"> <!-- Replace with valid path -->
+      </div>
+      <div class="profile-dropdown" onclick="toggleDropdown()">
+        <img src="pp.jpeg" alt="Profile" width="40" height="40"/>
+        <div class="dropdown" id="profileDropdown">
+          <button id="logout-btn">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendance Content -->
+    <div class="content">
+      <h2>Attendance Report</h2>
+      <div class="student-info">
+        <p><strong>Name:</strong> Harshita Singh</p>
+        <p><strong>Smart Card ID:</strong> ABBCA22297</p>
+        <p><strong>Class:</strong> BCA III Year</p>
+        <p><strong>As of:</strong> 28 February, 2025</p>
+        <p><strong>Minimum Requirement:</strong> 70% attendance in each subject</p>
+      </div>
+
+      <table>
+        <tr>
+          <th>Subject</th>
+          <th>Lecture Delivered</th>
+          <th>Lecture Attended</th>
+          <th>Attendance %</th>
+        </tr>
+        <tr>
+          <td>Project Lab</td>
+          <td>10</td>
+          <td>7</td>
+          <td>70</td>
+        </tr>
+        <tr>
+          <td>AI & ML Lab</td>
+          <td>22</td>
+          <td>16</td>
+          <td>72</td>
+        </tr>
+        <tr>
+          <td>Parenthood and Family Relation</td>
+          <td>15</td>
+          <td>13</td>
+          <td>86</td>
+        </tr>
+        <tr>
+          <td>Communication & Networking</td>
+          <td>41</td>
+          <td>32</td>
+          <td>78</td>
+        </tr>
+        <tr>
+          <td>AI & ML Theory</td>
+          <td>40</td>
+          <td>28</td>
+          <td>70</td>
+        </tr>
+        <tr>
+          <td>Discrete Mathematics</td>
+          <td>46</td>
+          <td>39</td>
+          <td>84</td>
+        </tr>
+        <tr>
+          <td>Entrepreneurship II</td>
+          <td>14</td>
+          <td>11</td>
+          <td>78</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('profileDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.onclick = function(e) {
+      if (!e.target.closest('.profile')) {
+        document.getElementById('profileDropdown').style.display = 'none';
+      }
+    }
+ // Hide dropdown if clicked outside of profile button or dropdown
+        document.addEventListener("click", function (event) {
+            if (!profileDropdown.contains(event.target) && event.target !== profileBtn) {
+                profileDropdown.classList.add("hidden"); // Add 'hidden' class to hide the dropdown
+            }
+        });
+    }
+
+    // Logout functionality
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+            alert("Logging out...");
+            localStorage.removeItem("username"); // Remove username or other session data
+            window.location.href = "stulogin.html"; // Redirect to login page after logout
+        });
+    }
+});
+
+  </script>
+
+</body>
+</html>
